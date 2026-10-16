@@ -1,0 +1,95 @@
+import React from 'react';
+import { MessageCircle, AlertCircle, Droplet, Flame, ShieldCheck, CheckCircle2 } from 'lucide-react';
+
+export const ContactSection: React.FC = () => {
+  const whatsappUrl = 'https://wa.me/994553695184?text=Salam!%20Nax%C3%A7%C4%B1van%20duz%20lampalar%C4%B1%20haqq%C3%B1nda%20m%C9%99lumat%20almaq%20ist%C9%99yir%C9%99m.';
+
+  return (
+    <section id="elaqe" className="py-16 bg-stone-900 text-stone-100 relative overflow-hidden">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        {/* Onlayn Alış Yoxdur Bildirişi */}
+        <div className="mb-10 p-5 sm:p-6 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
+          <div className="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0">
+            <AlertCircle className="w-5 h-5" />
+          </div>
+          <div className="flex-1">
+            <h4 className="font-serif font-bold text-amber-300 text-base mb-1">
+              Məlumat Portalı • Birbaşa Onlayn Alış Yoxdur
+            </h4>
+            <p className="text-xs sm:text-sm text-stone-300 leading-relaxed">
+              Bu sayt Naxçıvan duz lampaları haqqında ətraflı məlumat xarakteri daşıyır. Sayt üzərindən birbaşa onlayn alış-veriş aparılmır. Lampaların mövcudluğu, çəkisi, qiymətləri və sifariş üçün bizimlə birbaşa WhatsApp vasitəsilə əlaqə saxlayın.
+            </p>
+          </div>
+        </div>
+
+        {/* Yalnız 1 WhatsApp Keçidi */}
+        <div className="p-8 sm:p-10 rounded-3xl bg-stone-950 border border-amber-900/40 text-center shadow-2xl space-y-6">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-emerald-500/20 text-emerald-400 mx-auto">
+            <MessageCircle className="w-8 h-8" />
+          </div>
+
+          <div>
+            <span className="text-xs uppercase font-bold tracking-widest text-amber-400 block mb-1">
+              Birbaşa Əlaqə
+            </span>
+            <h3 className="font-serif text-2xl sm:text-3xl font-bold text-white">
+              Sual və Sifarişlər üçün WhatsApp
+            </h3>
+            <p className="text-stone-300 text-sm max-w-lg mx-auto mt-2 leading-relaxed">
+              Naxçıvan Duzdağ lampaları (təbii daş və taxta səbət) haqqında istənilən məlumatı əldə etmək və ya sifariş vermək üçün birbaşa WhatsApp nömrəmizə yazın:
+            </p>
+          </div>
+
+          <div className="pt-2">
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-lg shadow-xl shadow-emerald-950/60 hover:scale-105 active:scale-95 transition-all"
+            >
+              <MessageCircle className="w-6 h-6" />
+              <span>WhatsApp: 055-369-51-84</span>
+            </a>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-stone-400 pt-2">
+            <span className="flex items-center gap-1.5">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+              Sürətli cavablandırma
+            </span>
+            <span className="flex items-center gap-1.5">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+              Bakı və bölgələrə çatdırılma məlumatı
+            </span>
+          </div>
+        </div>
+
+        {/* Qulluq Qaydaları */}
+        <div id="qulluq" className="mt-8 p-6 rounded-3xl bg-stone-950/60 border border-stone-800/80 space-y-3">
+          <div className="flex items-center gap-2 text-amber-400 font-bold text-sm">
+            <ShieldCheck className="w-4 h-4" />
+            <span>Duz Lampasına Düzgün Qulluq Qaydaları</span>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-stone-300">
+            <div className="p-3.5 rounded-xl bg-stone-900/50 border border-stone-800 flex items-start gap-2.5">
+              <Droplet className="w-4 h-4 text-sky-400 shrink-0 mt-0.5" />
+              <div>
+                <strong className="text-white block mb-0.5">Su ilə yumayın:</strong>
+                Təbii duz suda əriyir. Tozunu yalnız quru və ya yüngül nəm parça ilə silin.
+              </div>
+            </div>
+            <div className="p-3.5 rounded-xl bg-stone-900/50 border border-stone-800 flex items-start gap-2.5">
+              <Flame className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+              <div>
+                <strong className="text-white block mb-0.5">Mütəmadi yandırın:</strong>
+                Nəmli havada lampanın daxildən qızması duzun təbii quruluğunu qoruyur və ionlaşmanı aktiv saxlayır.
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  );
+};

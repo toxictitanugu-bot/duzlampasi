@@ -1,0 +1,84 @@
+import React from 'react';
+import { motion } from 'motion/react';
+import { Wind, Zap, Moon, HeartHandshake, ShieldCheck, Sparkles, Mountain, CheckCircle2 } from 'lucide-react';
+import { HEALTH_BENEFITS } from '../data/lampData';
+
+export const DuzdaghEffect: React.FC = () => {
+  const iconMap: Record<string, React.ReactNode> = {
+    Wind: <Wind className="w-6 h-6 text-sky-400" />,
+    Zap: <Zap className="w-6 h-6 text-amber-400" />,
+    Moon: <Moon className="w-6 h-6 text-indigo-400" />,
+    HeartHandshake: <HeartHandshake className="w-6 h-6 text-rose-400" />,
+    ShieldCheck: <ShieldCheck className="w-6 h-6 text-emerald-400" />,
+    Sparkles: <Sparkles className="w-6 h-6 text-orange-400" />,
+  };
+
+  return (
+    <section id="duzdag-effekti" className="py-20 bg-stone-900 text-stone-100 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        {/* Əsas Qeyd Olunan Mətn */}
+        <div className="max-w-4xl mx-auto mb-16 text-center">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/15 border border-amber-500/40 text-amber-300 text-xs font-semibold tracking-wider uppercase mb-4">
+            <Mountain className="w-3.5 h-3.5 text-amber-400" />
+            Naxçıvan Duzdağ Şəfası
+          </div>
+
+          <div className="relative p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-amber-950/60 via-stone-900/90 to-amber-950/60 border border-amber-500/40 shadow-2xl backdrop-blur-md">
+            <p className="font-serif text-xl sm:text-2xl lg:text-3xl font-semibold text-amber-200 leading-relaxed italic">
+              Xüsusilə natural duzun təbii xüsusiyyətləri sayəsində bu lampalar ev şəraitində kiçik bir "Duzdağ effekti" yaradır.
+            </p>
+          </div>
+        </div>
+
+        {/* 6 Fayda */}
+        <div id="faydalar">
+          <div className="text-center max-w-3xl mx-auto mb-12">
+            <span className="text-xs uppercase font-bold tracking-widest text-amber-400 block mb-2">
+              Sübut Edilmiş Təbii Faydalar
+            </span>
+            <h3 className="font-serif text-3xl sm:text-4xl font-bold text-white">
+              Naxçıvan duz lampalarının əsas xeyirləri bunlardır:
+            </h3>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {HEALTH_BENEFITS.map((benefit, index) => (
+              <motion.div
+                key={benefit.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                className="group relative rounded-3xl bg-stone-950/90 border border-amber-900/30 hover:border-amber-500/50 p-6 flex flex-col justify-between transition-all"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-12 h-12 rounded-2xl bg-stone-900 border border-amber-500/30 flex items-center justify-center">
+                      {iconMap[benefit.icon]}
+                    </div>
+                    <span className="text-xs font-mono font-bold text-stone-500">0{index + 1}</span>
+                  </div>
+
+                  <h4 className="font-serif text-lg font-bold text-white mb-2 group-hover:text-amber-300 transition-colors">
+                    {benefit.title}
+                  </h4>
+
+                  <p className="text-stone-300 text-xs sm:text-sm leading-relaxed">
+                    {benefit.description}
+                  </p>
+                </div>
+
+                <div className="mt-5 pt-3 border-t border-stone-800/60 flex items-center gap-1.5 text-xs text-amber-400/80 font-medium">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-amber-400" />
+                  <span>Təbii Şəfa</span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+      </div>
+    </section>
+  );
+};

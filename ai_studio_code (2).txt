@@ -1,0 +1,289 @@
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { Sparkles, Sliders, CheckCircle2, MapPin, Maximize2, MessageCircle } from 'lucide-react';
+import { LAMP_MODELS, LampModel } from '../data/lampData';
+
+interface LampShowcaseProps {
+  selectedModelId: 'stone' | 'wooden_basket';
+  onSelectModel: (id: 'stone' | 'wooden_basket') => void;
+  onOpenContact: () => void;
+}
+
+export const LampShowcase: React.FC<LampShowcaseProps> = ({
+  selectedModelId,
+  onSelectModel,
+}) => {
+  const currentModel: LampModel = LAMP_MODELS[selectedModelId];
+  const [glowBrightness, setGlowBrightness] = useState<number>(85);
+  const [activeTab, setActiveTab] = useState<'overview' | 'advantages' | 'specs' | 'room'>('overview');
+  const [isZoomed, setIsZoomed] = useState<boolean>(false);
+
+  const glowOpacity = glowBrightness / 100;
+  const filterStyle = glowBrightness === 0
+    ? 'brightness(0.7) contrast(0.9) grayscale(0.2)'
+    : `brightness(${0.85 + glowOpacity * 0.3}) contrast(${0.95 + glowOpacity * 0.15})`;
+
+  return (
+    <section id="modeller" className="py-20 bg-stone-950 text-stone-100 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        <div className="text-center max-w-3xl mx-auto mb-12">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-semibold tracking-wider uppercase mb-3">
+            <Sparkles className="w-3.5 h-3.5" />
+            İki Fərqli Şəfa və Dizayn Forması
+          </div>
+          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white mb-4">
+            Naxçıvan Duz Lampası Modelləri
+          </h2>
+          <p className="text-stone-300 text-base sm:text-lg">
+            Hər iki model 100% təbii Naxçıvan Duzdağ qaya duzundan hazırlanır. Öz zövqünüzə və məkanınıza uyğun olanı seçin və interaktiv işıq simulyatoru ilə canlı təcrübə edin.
+          </p>
+        </div>
+
+        {/* Model Switcher */}
+        <div className="flex justify-center mb-10">
+          <div className="p-1.5 rounded-2xl bg-stone-900/90 border border-amber-900/40 backdrop-blur-md flex items-center gap-2 max-w-xl w-full shadow-2xl">
+            <button
+              type="button"
+              onClick={() => onSelectModel('stone')}
+              className={`relative flex-1 py-3.5 px-4 rounded-xl text-center font-medium transition-all duration-300 flex items-center justify-center gap-2.5 ${
+                selectedModelId === 'stone'
+                  ? 'text-stone-950 font-bold shadow-lg'
+                  : 'text-stone-400 hover:text-white hover:bg-stone-800/40'
+              }`}
+            >
+              {selectedModelId === 'stone' && (
+                <motion.div
+                  layoutId="activeModelIndicator"
+                  className="absolute inset-0 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 rounded-xl"
+                  transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+                />
+              )}
+              <span className="relative z-10 text-lg">🪨</span>
+              <div className="relative z-10 text-left">
+                <div className="text-xs uppercase tracking-wider opacity-80 leading-none">1-ci Növ</div>
+                <div className="text-sm font-bold leading-tight mt-0.5">Təbii Qaya Daş</div>
+              </div>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => onSelectModel('wooden_basket')}
+              className={`relative flex-1 py-3.5 px-4 rounded-xl text-center font-medium transition-all duration-300 flex items-center justify-center gap-2.5 ${
+                selectedModelId === 'wooden_basket'
+                  ? 'text-stone-950 font-bold shadow-lg'
+                  : 'text-stone-400 hover:text-white hover:bg-stone-800/40'
+              }`}
+            >
+              {selectedModelId === 'wooden_basket' && (
+                <motion.div
+                  layoutId="activeModelIndicator"
+                  className="absolute inset-0 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 rounded-xl"
+                  transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+                />
+              )}
+              <span className="relative z-10 text-lg">🧺</span>
+              <div className="relative z-10 text-left">
+                <div className="text-xs uppercase tracking-wider opacity-80 leading-none">2-ci Növ</div>
+                <div className="text-sm font-bold leading-tight mt-0.5">Taxta Səbət Duz</div>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        {/* Animated Model Details */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentModel.id}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.4 }}
+            className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start"
+          >
+            {/* Şəkil və İşıq Tənzimləyici */}
+            <div className="lg:col-span-6 flex flex-col gap-6">
+              <div className="relative rounded-3xl overflow-hidden bg-gradient-to-b from-stone-900 to-stone-950 border border-amber-900/40 p-6 sm:p-8 flex flex-col items-center justify-center min-h-[440px] shadow-2xl">
+                
+                <div className="absolute top-5 left-5 z-20 flex items-center gap-2">
+                  <span className="px-3 py-1 rounded-full bg-stone-950/80 border border-amber-500/40 text-amber-300 text-xs font-bold backdrop-blur-md">
+                    {currentModel.badge}
+                  </span>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setIsZoomed(true)}
+                  className="absolute top-5 right-5 z-20 p-2 rounded-xl bg-stone-950/70 hover:bg-stone-900 text-stone-300 hover:text-amber-400 border border-white/10 transition-colors backdrop-blur-md"
+                >
+                  <Maximize2 className="w-4 h-4" />
+                </button>
+
+                <div className="relative z-10 w-full max-w-[380px] aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl flex items-center justify-center">
+                  <img
+                    src={currentModel.image}
+                    alt={currentModel.name}
+                    referrerPolicy="no-referrer"
+                    className="w-full h-full object-cover transition-all duration-500 cursor-pointer hover:scale-105"
+                    style={{ filter: filterStyle }}
+                    onClick={() => setIsZoomed(true)}
+                  />
+                </div>
+
+                {/* İşıq Tənzimləyici */}
+                <div className="w-full mt-6 p-4 rounded-2xl bg-stone-950/80 border border-amber-900/30 backdrop-blur-md z-10">
+                  <div className="flex items-center justify-between text-xs text-stone-300 mb-2">
+                    <span className="flex items-center gap-1.5 font-medium text-amber-400">
+                      <Sliders className="w-3.5 h-3.5" />
+                      İşıq Simulyatoru:
+                    </span>
+                    <span className="font-bold text-amber-300">%{glowBrightness}</span>
+                  </div>
+
+                  <input
+                    type="range"
+                    min="0"
+                    max="100"
+                    step="5"
+                    value={glowBrightness}
+                    onChange={(e) => setGlowBrightness(Number(e.target.value))}
+                    className="w-full h-2 bg-stone-800 rounded-lg appearance-none cursor-pointer accent-amber-500"
+                  />
+
+                  <div className="flex items-center justify-between mt-3 gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setGlowBrightness(0)}
+                      className="text-[11px] px-2.5 py-1 rounded-lg text-stone-400 hover:text-stone-200"
+                    >
+                      Söndür
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setGlowBrightness(40)}
+                      className="text-[11px] px-2.5 py-1 rounded-lg text-stone-400 hover:text-amber-200"
+                    >
+                      Sakit Gecə
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setGlowBrightness(80)}
+                      className="text-[11px] px-2.5 py-1 rounded-lg text-stone-400 hover:text-amber-200"
+                    >
+                      İsti İşıq
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setGlowBrightness(100)}
+                      className="text-[11px] px-2.5 py-1 rounded-lg text-stone-400 hover:text-amber-300"
+                    >
+                      Maksimal
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Məlumat Tabları */}
+            <div className="lg:col-span-6 flex flex-col">
+              <div className="mb-2">
+                <span className="text-xs uppercase tracking-widest text-amber-400 font-semibold">
+                  Model Təqdimatı
+                </span>
+                <h3 className="font-serif text-2xl sm:text-3xl font-bold text-white mt-1">
+                  {currentModel.name}
+                </h3>
+                <p className="text-stone-400 text-sm mt-1.5 italic">
+                  "{currentModel.tagline}"
+                </p>
+              </div>
+
+              <div className="flex border-b border-stone-800 mt-6 gap-2 sm:gap-4 overflow-x-auto pb-1">
+                {(['overview', 'advantages', 'specs', 'room'] as const).map((tab) => (
+                  <button
+                    key={tab}
+                    type="button"
+                    onClick={() => setActiveTab(tab)}
+                    className={`text-xs sm:text-sm font-semibold pb-2.5 transition-all shrink-0 ${
+                      activeTab === tab ? 'text-amber-400 border-b-2 border-amber-400' : 'text-stone-400'
+                    }`}
+                  >
+                    {tab === 'overview' && 'Xüsusiyyətlər'}
+                    {tab === 'advantages' && 'Üstünlüklər'}
+                    {tab === 'specs' && 'Parametrlər'}
+                    {tab === 'room' && 'Məkan'}
+                  </button>
+                ))}
+              </div>
+
+              <div className="py-6 min-h-[260px]">
+                {activeTab === 'overview' && (
+                  <div className="space-y-4">
+                    <p className="text-stone-300 text-sm leading-relaxed">
+                      {currentModel.description}
+                    </p>
+                    <div className="space-y-2.5 pt-2">
+                      {currentModel.keyFeatures.map((feat, idx) => (
+                        <div key={idx} className="flex items-start gap-2.5 text-sm text-stone-200">
+                          <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                          <span>{feat}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {activeTab === 'advantages' && (
+                  <div className="space-y-3">
+                    {currentModel.advantages.map((adv, idx) => (
+                      <div key={idx} className="p-3.5 rounded-xl bg-stone-900/50 border border-stone-800">
+                        <h4 className="text-sm font-bold text-amber-300 mb-1">{adv.title}</h4>
+                        <p className="text-xs text-stone-300 leading-relaxed">{adv.desc}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {activeTab === 'specs' && (
+                  <div className="rounded-2xl border border-stone-800 bg-stone-900/40 divide-y divide-stone-800/80">
+                    {currentModel.specifications.map((spec, idx) => (
+                      <div key={idx} className="flex justify-between items-center px-4 py-3 text-xs sm:text-sm">
+                        <span className="text-stone-400">{spec.label}</span>
+                        <span className="text-stone-100 font-semibold">{spec.value}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {activeTab === 'room' && (
+                  <div className="space-y-3 text-xs text-stone-300">
+                    <div className="p-3.5 rounded-xl bg-stone-900/60 border border-amber-900/30">
+                      <div className="flex items-center gap-1.5 text-amber-400 font-bold mb-1">
+                        <MapPin className="w-4 h-4" />
+                        <span>İdeal Yerləşmə Yeri</span>
+                      </div>
+                      <p className="text-stone-200">{currentModel.idealLocation}</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Tək WhatsApp Düyməsi */}
+              <div className="pt-4 border-t border-stone-800/80">
+                <a
+                  href={`https://wa.me/994553695184?text=${encodeURIComponent(`Salam! ${currentModel.name} haqqında məlumat almaq istəyirəm.`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full inline-flex items-center justify-center gap-2.5 py-4 px-6 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-base shadow-xl shadow-emerald-950/50 active:scale-98 transition-all"
+                >
+                  <MessageCircle className="w-5 h-5" />
+                  <span>WhatsApp ilə Əlaqə Saxla (055-369-51-84)</span>
+                </a>
+              </div>
+            </div>
+          </motion.div>
+        </AnimatePresence>
+      </div>
+    </section>
+  );
+};
